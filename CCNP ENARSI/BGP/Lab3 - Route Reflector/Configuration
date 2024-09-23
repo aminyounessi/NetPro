@@ -1,1 +1,70 @@
+<<<Router R1 configuration>>>
+
+R1#config t
+R1(config)#hostname R1
+R1(config)#interface FastEthernet0/0
+R1(config-if)#ip address 10.12.1.1 255.255.255.0
+!
+R1(config)#interface FastEthernet1/0
+R1(config-if)#ip address 10.1.1.1 255.255.255.0
+!
+R1(config)#router bgp 65100
+R1(config-router)#network 10.1.1.0 mask 255.255.255.0
+R1(config-router)#redistribute connected
+R1(config-router)#neighbor 10.12.1.2 remote-as 65100
+!
+
+
+<<<Router R2 configuration>>>
+
+R2#config t
+R2(config)#hostname R2
+R2(config)#interface FastEthernet0/0
+R2(config-if)#ip address 10.12.1.2 255.255.255.0
+!
+R2(config)#interface FastEthernet1/0
+R2(config-if)#ip address 10.23.1.1 255.255.255.0
+!
+R2(config)#router bgp 65100
+R2(config-router)#redistribute connected
+R2(config-router)#neighbor 10.12.1.1 remote-as 65100
+R2(config-router)#neighbor 10.12.1.1 route-reflector-client
+R2(config-router)#neighbor 10.23.1.2 remote-as 65100
+!
+
+
+<<<Router R3 configuration>>>
+
+
+R3#conf t
+R3(config)#hostname R3
+R3(config)#interface FastEthernet0/0
+R3(config-if)#ip address 10.23.1.2 255.255.255.0
+!
+R3(config)#interface FastEthernet1/0
+R3(config-if)#ip address 10.34.1.1 255.255.255.0
+!
+R3(config)#router bgp 65100
+R3(config-router)#redistribute connected
+R3(config-router)#neighbor 10.23.1.1 remote-as 65100
+R3(config-router)#neighbor 10.34.1.2 remote-as 65100
+R3(config-router)#neighbor 10.34.1.2 route-reflector-client
+!
+
+
+<<<Router R4 configuration>>>
+
+R4#conf t
+R4(config)#hostname R4
+R4(config)#interface FastEthernet0/0
+R4(config-if)#ip address 10.34.1.2 255.255.255.0
+!
+R4(config)#interface FastEthernet1/0
+R4(config-if)#ip address 10.4.4.1 255.255.255.0
+!
+R4(config)#router bgp 65100
+R4(config-router)#network 10.4.4.0 mask 255.255.255.0
+R4(config-router)#redistribute connected
+R4(config-router)#neighbor 10.34.1.1 remote-as 65100
+!
 
