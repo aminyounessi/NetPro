@@ -70,3 +70,28 @@ R2(config-router)#network 10.2.3.0 0.0.0.3
 R2(config-router)#network 172.16.0.0 0.0.0.3
 !
 
+
+
+<<<Router R4 configuration>>>
+
+
+R4#conf t
+R4(config)#hostname R4
+R4(config)#ip dhcp pool LAN
+R4(config-dhcp)#network 10.4.4.0 255.255.255.0
+R4(config-dhcp)#default-router 10.4.4.1
+R4(config-dhcp)#lease infinite
+!
+R4(config)#interface FastEthernet0/0
+R4(config-if)#description R4<--->R3
+R4(config-if)#ip address 10.3.4.2 255.255.255.252
+!
+R4(config)#interface FastEthernet1/0
+R4(config-if)#description LAN-Address
+R4(config-if)#ip address 10.4.4.1 255.255.255.0
+!
+R4(config)#router eigrp EIGRP-STUB-SITE
+R4(config-router)#address-family ipv4 unicast autonomous-system 10
+R4(config-router)#network 10.3.4.0 0.0.0.3
+R4(config-router)#network 10.4.4.0 0.0.0.255
+!
