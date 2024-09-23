@@ -1,1 +1,50 @@
+<<<Router R10 configuration>>>
 
+R10#conf t
+R10(config)#hostname R10
+R10(config)#ipv6 unicast-routing
+!
+R10(config)#interface Loopback0
+R10(config-if)#ipv6 address 2001:DB8:1::1/128
+R10(config-if)#ipv6 eigrp 100
+!
+R10(config)#interface FastEthernet0/0
+R10(config-if)#ipv6 address FE80::1 link-local
+R10(config-if)#ipv6 address 2001:DB8:0:12::1/64
+R10(config-if)#ipv6 enable
+R10(config-if)#ipv6 eigrp 100
+!
+R10(config)#interface Ethernet2/0
+R10(config-if)#ipv6 address FE80::1 link-local
+R10(config-if)#ipv6 address 2001:DB8:1:1::1/64
+R10(config-if)#ipv6 enable
+R10(config-if)#ipv6 eigrp 100
+!
+R10(config)#ipv6 router eigrp 100
+R10(config-rtr)#passive-interface Ethernet2/0
+R10(config-rtr)#eigrp router-id 192.168.1.1
+!
+
+<<<Router R11 configuration>>>
+
+R11#conf t
+R11(config)#hostname R11
+
+R11(config)#ipv6 unicast-routing
+R11(config)#interface Loopback0
+R11(config-if)#ipv6 address 2001:DB8:2::2/128
+!
+R11(config)#interface FastEthernet0/0
+R11(config-if)#ipv6 address FE80::2 link-local
+R11(config-if)#ipv6 address 2001:DB8:0:12::2/64
+R11(config-if)#ipv6 enable
+!
+R11(config)#interface Ethernet2/0
+R11(config-if)#ipv6 address FE80::2 link-local
+R11(config-if)#ipv6 address 2001:DB8:2:2::1/64
+R11(config-if)#ipv6 enable
+!
+R11(config)#router eigrp NAMED-MODE
+R11(config-router-af)#address-family ipv6 unicast autonomous-system 100
+R11(config-router-af)#eigrp router-id 192.168.2.2
+!
