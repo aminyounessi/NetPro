@@ -61,3 +61,23 @@ R5(config-router)#metric weights 0 0 0 1 0 0
 R5(config-router)#variance 2
 R5(config-router)#network 0.0.0.0
 !
+
+
+<<<Router R8 configuration>>>
+
+
+R8#conf t
+R8(config)#interface Loopback0
+R8(config-if)#ip address 5.5.5.5 255.255.255.255
+!
+R8(config)#interface FastEthernet1/0
+R8(config-if)#ip address 192.168.2.2 255.255.255.0
+!
+R8(config)#interface Ethernet2/0
+R8(config-if)#description R8<--->R7
+R8(config-if)#ip address 192.168.3.2 255.255.255.0
+!
+R8(config)#router eigrp 1
+R8(config-router)#metric weights 0 0 0 1 0 0
+R8(config-router)#network 0.0.0.0
+!
