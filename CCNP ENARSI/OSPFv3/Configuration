@@ -1,0 +1,106 @@
+
+<<<Router R1 configuration>>>
+
+R1#conf t
+R1(config)#ipv6 unicast-routing
+R1(config)#interface Loopback0
+R1(config-if)#ipv6 address 2001:DB8::1/128
+R1(config-if)#ospfv3 1 ipv6 area 0
+!
+R1(config)#interface FastEthernet0/0
+R1(config-if)#ipv6 address FE80::1 link-local
+R1(config-if)#ipv6 address 2001:DB8:0:12::1/64
+R1(config-if)#ipv6 enable
+R1(config-if)#ospfv3 1 ipv6 area 0
+!
+R1(config)#interface FastEthernet2/0
+R1(config-if)#ipv6 address FE80::1 link-local
+R1(config-if)#ipv6 address 2001:DB8:0:1::1/64
+R1(config-if)#ipv6 enable
+R1(config-if)#ospfv3 1 ipv6 area 0
+!
+R1(config)#router ospfv3 1
+R1(config-router)#router-id 192.168.1.1
+R1(config-router)#address-family ipv6 unicast
+R1(config-router-af)#exit-address-family
+!
+
+<<<Router R2 configuration>>>
+
+R2#conf t
+R2(config)#ipv6 unicast-routing
+R2(config)#interface Loopback0
+R2(config-if)#ipv6 address 2001:DB8::2/128
+R2(config-if)#ospfv3 1 ipv6 area 0
+!
+R2(config)#interface FastEthernet0/0
+R2(config-if)#ipv6 address FE80::2 link-local
+R2(config-if)#ipv6 address 2001:DB8:0:12::2/64
+R2(config-if)#ipv6 enable
+R2(config-if)#ospfv3 1 ipv6 area 0
+!
+R2(config)#interface FastEthernet1/0
+R2(config-if)#ipv6 address FE80::2 link-local
+R2(config-if)#ipv6 address 2001:DB8:0:23::1/64
+R2(config-if)#ipv6 enable
+R2(config-if)#ospfv3 1 ipv6 area 0
+!
+R2(config)#router ospfv3 1
+R2(config-router)#router-id 192.168.2.2
+R2(config-router)#address-family ipv6 unicast
+R2(config-router-af)#exit-address-family
+!
+
+<<<Router R3 configuration>>>
+
+R3#conf t
+R3(config)#ipv6 unicast-routing
+R3(config)#interface Loopback0
+R3(config-if)#ipv6 address 2001:DB8::3/128
+R3(config-if)#ospfv3 1 ipv6 area 0
+!
+R3(config)#interface FastEthernet0/0
+R3(config-if)#ipv6 address FE80::3 link-local
+R3(config-if)#ipv6 address 2001:DB8:0:23::2/64
+R3(config-if)#ipv6 enable
+R3(config-if)#ospfv3 1 ipv6 area 0
+!
+R3(config)#interface FastEthernet1/0
+R3(config-if)#ipv6 address FE80::3 link-local
+R3(config-if)#ipv6 address 2001:DB8:0:34::1/64
+R3(config-if)#ipv6 enable
+R3(config-if)#ospfv3 1 ipv6 area 0
+!
+R3(config)#router ospfv3 1
+R3(config-router)#router-id 192.168.3.3
+R3(config-router)#address-family ipv6 unicast
+R3(config-router-af)#exit-address-family
+!
+
+<<<Router R4 configuration>>>
+
+R4#conf t
+R4(config)#ipv6 unicast-routing
+R4(config)#interface Loopback0
+R4(config-if)#ipv6 address 2001:DB8::4/128
+R4(config-if)#ospfv3 1 ipv6 area 0
+!
+R4(config)#interface FastEthernet0/0
+R4(config-if)#ipv6 address FE80::4 link-local
+R4(config-if)#ipv6 address 2001:DB8:0:34::2/64
+R4(config-if)#ipv6 enable
+R4(config-if)#ospfv3 1 ipv6 area 0
+!
+R4(config)#interface FastEthernet2/0
+R4(config-if)#ipv6 address FE80::4 link-local
+R4(config-if)#ipv6 address 2001:DB8:0:4::1/64
+R4(config-if)#ipv6 enable
+R4(config-if)#ospfv3 1 ipv6 area 0
+!
+R4(config)#router ospfv3 1
+R4(config-router)#router-id 192.168.4.4
+R4(config-router)#address-family ipv6 unicast
+R4(config-router-af)#exit-address-family
+!
+
+
