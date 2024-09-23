@@ -1,1 +1,117 @@
+<<<Router R1 configuration>>>
 
+
+R1#conf t
+R1(config)#hostname R1
+R1(config)#interface Loopback0
+R1(config-if)#ip address 192.168.100.1 255.255.255.255
+!
+R1(config)#interface FastEthernet0/0
+R1(config-if)#description R1<--->R2
+R1(config-if)#ip address 10.10.10.1 255.255.255.252
+!
+R1(config)#interface FastEthernet1/0
+R1(config-if)#description R1<--->R3
+R1(config-if)#ip address 10.10.11.1 255.255.255.252
+!
+R1(config)#interface FastEthernet2/0
+R1(config-if)#description R1<--->R4
+R1(config-if)#ip address 10.10.13.1 255.255.255.252
+!
+R1(config)#interface FastEthernet3/0
+R1(config-if)#description R1<--->R5
+R1(config-if)#ip address 10.10.12.1 255.255.255.252
+!
+R1(config)#router eigrp 1
+R1(config-router)#network 10.10.11.0 0.0.0.3
+!
+R1(config)#router ospf 1
+R1(config-router)#network 10.10.12.0 0.0.0.3 area 0
+!
+R1(config)#router bgp 65100
+R1(config-router)#bgp router-id 192.168.100.1
+R1(config-router)#network 10.10.10.0 mask 255.255.255.252
+R1(config-router)#network 192.168.1.1 mask 255.255.255.255
+R1(config-router)#network 192.168.3.1 mask 255.255.255.255
+R1(config-router)#network 192.168.4.1 mask 255.255.255.255
+R1(config-router)#redistribute ospf 1
+R1(config-router)#neighbor 10.10.10.2 remote-as 65500
+R1(config-router)#neighbor 10.10.10.2 password password
+R1(config-router)#neighbor 10.10.10.2 timers 10 40
+!
+R1(config)#ip route 192.168.4.1 255.255.255.255 10.10.13.2 name R4(Loopback)
+!
+
+
+<<<Router R2 configuration>>>
+
+
+R2#config t
+R2(config)#hostname R2
+R2(config)#interface Loopback0
+R2(config-if)#ip address 192.168.200.1 255.255.255.255
+!
+R2(config)#interface FastEthernet0/0
+R2(config-if)#description R2<--->R1
+R2(config-if)#ip address 10.10.10.2 255.255.255.252
+!
+R2(config)#router bgp 65500
+R2(config-router)#bgp router-id 192.168.200.1
+R2(config-router)#no bgp default ipv4-unicast
+R2(config-router)#neighbor 10.10.10.1 remote-as 65100
+R2(config-router)#neighbor 10.10.10.1 password password
+R2(config-router)#neighbor 10.10.10.1 timers 15 50
+!
+R2(config-router)#address-family ipv4
+R2(config-router)#network 10.10.10.0 mask 255.255.255.252
+R2(config-router)#network 192.168.200.1 mask 255.255.255.255
+R2(config-router)#neighbor 10.10.10.1 activate
+!
+
+
+<<<Router R3 configuration>>>
+
+
+R3#conf t
+R3(config)#hostname R3
+R3(config)#interface Loopback0
+R3(config-if)#ip address 192.168.3.1 255.255.255.255
+!
+R3(config)#interface FastEthernet0/0
+R3(config-if)#ip address 10.10.11.2 255.255.255.252
+!
+R3(config)#router eigrp 1
+R3(config-if)#network 10.10.11.0 0.0.0.3
+R3(config-if)#network 192.168.3.3 0.0.0.0
+!
+
+<<<Router R4 configuration>>>
+
+
+R4#config t
+R4(config)#hostname R4
+R4(config)#interface Loopback0
+R4(config-if)#ip address 192.168.4.1 255.255.255.255
+!
+R4(config)#interface FastEthernet0/0
+R4(config-if)#description R4<--->R1
+R4(config-if)#ip address 10.10.13.2 255.255.255.252
+!
+
+
+<<<Router R5 configuration>>>
+
+
+R5#config t
+R5(config)#hostname R5
+R5(config)#interface Loopback0
+R5(config-if)#ip address 192.168.5.1 255.255.255.255
+!
+R5(config)#interface FastEthernet0/0
+R5(config-if)#description R5<--->R1
+R5(config-if)#ip address 10.10.12.2 255.255.255.252
+!
+R5(config)#router ospf 1
+R5(config-router)#network 10.10.12.0 0.0.0.3 area 0
+R5(config-router)#network 192.168.5.1 0.0.0.0 area 0
+!
