@@ -1,1 +1,78 @@
+<<<Router 5 configuration>>>
 
+
+Router5#conf t
+Router5(config)#hostname Router5
+Router5(config)#interface FastEthernet0/0
+Router5(config-if)#description Router5<--->Router6
+Router5(config-if)#ip address 10.0.0.1 255.255.255.252
+!
+Router5(config)#interface FastEthernet1/0
+Router5(config-if)#description Router5<--->Router7
+Router5(config-if)#ip address 10.0.0.5 255.255.255.252
+!
+!
+Router5(config)#router eigrp 1
+Router5(config-router)network 10.0.0.0 0.0.0.3
+Router5(config-router)network 10.0.0.4 0.0.0.3
+Router5(config-router)eigrp stub connected summary
+!
+
+
+<<<Router 6 configuration>>>
+
+
+Router6#conf t
+Router6(config)#hostname Router6
+Router6(config)#interface Tunnel0
+Router6(config-if)#ip address 172.16.0.1 255.255.255.252
+Router6(config-if)#tunnel source 10.0.0.2
+Router6(config-if)#tunnel destination 10.0.0.6
+!
+Router6(config)#interface FastEthernet0/0
+Router6(config-if)#description Router6<--->Router5
+Router6(config-if)#ip address 10.0.0.2 255.255.255.252
+!
+Router6(config)#interface FastEthernet1/0
+Router6(config-if)#description LAN-Address
+Router6(config-if)#ip address 192.168.0.1 255.255.255.0
+!
+Router6(config)#interface FastEthernet2/0
+Router6(config-if)#description Router6<--->Router7
+Router6(config-if)#ip address 10.0.0.9 255.255.255.252
+!
+Router6(config)#router eigrp 1
+Router6(config-if)#network 10.0.0.0 0.0.0.3
+Router6(config-if)#network 10.0.0.8 0.0.0.3
+Router6(config-if)#network 172.16.0.0 0.0.0.3
+Router6(config-if)#network 192.168.0.0
+!
+
+<<<Router 7 configuration>>>
+
+Router7#conf t
+Router7(config)#hostname Router7
+Router7(config)#interface Tunnel0
+Router7(config-if)#ip address 172.16.0.2 255.255.255.252
+Router7(config-if)#tunnel source 10.0.0.6
+Router7(config-if)#tunnel destination 10.0.0.2
+!
+Router7(config)#interface FastEthernet0/0
+Router7(config-if)#description Router7<--->Router5
+Router7(config-if)#ip address 10.0.0.6 255.255.255.252
+!
+Router7(config)#interface FastEthernet1/0
+Router7(config-if)#description LAN-Address
+Router7(config-if)#ip address 192.168.1.1 255.255.255.0
+!
+Router7(config)#interface FastEthernet2/0
+Router7(config-if)#description Router7<--->Router6
+Router7(config-if)#ip address 10.0.0.10 255.255.255.252
+
+!
+Router7(config)#router eigrp 1
+Router7(config-router)#network 10.0.0.4 0.0.0.3
+Router7(config-router)#network 10.0.0.8 0.0.0.3
+Router7(config-router)#network 172.16.0.0 0.0.0.3
+Router7(config-router)#network 192.168.1.0
+!
