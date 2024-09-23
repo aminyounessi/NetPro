@@ -48,7 +48,9 @@ Router6(config-if)#network 172.16.0.0 0.0.0.3
 Router6(config-if)#network 192.168.0.0
 !
 
+
 <<<Router 7 configuration>>>
+
 
 Router7#conf t
 Router7(config)#hostname Router7
