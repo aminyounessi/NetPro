@@ -1,0 +1,38 @@
+<<<Router R3 Configuration>>>
+
+R3(config)#interface Loopback0
+R3(config-if)#ip address 192.168.1.1 255.255.255.255
+!
+R3(config)#interface FastEthernet0/0
+R3(config-if)#ip address 10.10.10.5 255.255.255.252
+!
+R3(config)#interface Ethernet1/0
+R3(config-if)#description R3<--->R4
+R3(config-if)#ip address 10.10.10.1 255.255.255.252
+!
+R3(config)#router eigrp 1
+R3(config-router)#network 0.0.0.0
+!
+
+
+<<<Router R4 Configuration>>>
+
+R4(config)#interface Loopback0
+R4(config-if)#ip address 192.168.2.1 255.255.255.255
+!
+R4(config)#interface FastEthernet0/0
+R4(config-if)#ip address 10.10.10.6 255.255.255.252
+R4(config-if)#ip summary-address eigrp 1 0.0.0.0 0.0.0.0 leak-map test
+!
+R4(config)#interface Ethernet1/0
+R4(config-if)#description R4<--->R3
+R4(config-if)#ip address 10.10.10.2 255.255.255.252
+!
+R4(config)#router eigrp 1
+R4(config-router)#network 0.0.0.0
+!
+R4(config)#access-list 1 permit 192.168.2.1
+!
+R4(config)#route-map test permit 10
+R4(config-route-map)#match ip address 1
+!
