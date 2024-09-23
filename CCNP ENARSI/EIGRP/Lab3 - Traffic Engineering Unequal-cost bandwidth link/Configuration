@@ -15,3 +15,49 @@ R9(config)#router eigrp 1
 R9(config-router)#metric weights 0 0 0 1 0 0
 R9(config-router)#network 0.0.0.0
 !
+
+<<<Router R6 configuration>>>
+
+
+R6#conf t
+R6(config)#hostname R6
+R6(config)#interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
+R6(config)#interface FastEthernet0/0
+R6(config-if)#description R6<--->R5
+R6(config-if)#ip address 192.168.0.2 255.255.255.0
+!
+R6(config)#interface FastEthernet1/0
+R6(config-if)#description R6<--->R8
+R6(config-if)#ip address 192.168.2.1 255.255.255.0
+!
+R6(config)#interface FastEthernet3/0
+R6(config-if)#description R6<--->R9
+R6(config-if)#ip address 192.168.4.1 255.255.255.0
+!
+R6(config)#router eigrp 1
+R6(config-router)#metric weights 0 0 0 1 0 0
+R6(config-router)#network 0.0.0.0
+!
+
+<<<Router R5 configuration>>>
+
+R5#conf t
+R5(config)#hostname R5
+R5(config)#interface Loopback0
+R5(config-if)#ip address 2.2.2.2 255.255.255.255
+!
+R5(config)#interface FastEthernet0/0
+R5(config-if)#description R5<--->R6
+R5(config-if)#ip address 192.168.0.1 255.255.255.0
+!
+R5(config)#interface FastEthernet2/0
+R5(config-if)#description R5<--->R7
+R5(config-if)#ip address 192.168.1.1 255.255.255.0
+!
+R5(config)#router eigrp 1
+R5(config-router)#metric weights 0 0 0 1 0 0
+R5(config-router)#variance 2
+R5(config-router)#network 0.0.0.0
+!
