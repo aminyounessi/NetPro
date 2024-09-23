@@ -1,1 +1,17 @@
+<<<Router R9 configuration>>>
 
+
+R9#conf t
+R9(config)#hostname R9
+!
+R9(config)#interface Loopback0
+R9(config-if)#ip address 1.1.1.1 255.255.255.255
+!
+R9(config)#interface FastEthernet0/0
+R9(config-if)#description R9<--->R6
+R9(config-if)#ip address 192.168.4.2 255.255.255.0
+!
+R9(config)#router eigrp 1
+R9(config-router)#metric weights 0 0 0 1 0 0
+R9(config-router)#network 0.0.0.0
+!
