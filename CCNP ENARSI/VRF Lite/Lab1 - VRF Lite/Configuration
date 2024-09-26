@@ -1,1 +1,293 @@
+<<<Router R1 configuration>>>
 
+
+
+R1#show running-config
+Building configuration...
+
+Current configuration : 1979 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+ip vrf Blue
+!
+ip vrf Green
+!
+ip vrf Red
+!
+interface FastEthernet0/0.1
+ encapsulation dot1Q 100
+ ip vrf forwarding Red
+ ip address 10.0.12.1 255.255.255.0
+!
+interface FastEthernet0/0.2
+ encapsulation dot1Q 200
+ ip vrf forwarding Green
+ ip address 172.16.12.1 255.255.255.0
+!
+interface FastEthernet0/0.3
+ encapsulation dot1Q 300
+ ip vrf forwarding Blue
+ ip address 192.168.12.1 255.255.255.0
+!
+interface FastEthernet1/0
+ description LAN-Address
+ ip vrf forwarding Red
+ ip address 10.0.1.1 255.255.255.0
+ duplex full
+!
+interface FastEthernet2/0
+ description LAN-Address
+ ip vrf forwarding Green
+ ip address 172.16.1.1 255.255.255.0
+ duplex full
+!
+interface FastEthernet3/0
+ description LAN-Address
+ ip vrf forwarding Blue
+ ip address 192.168.1.1 255.255.255.0
+ duplex full
+!
+router eigrp VRFTEST
+ !
+ address-family ipv4 unicast vrf Red autonomous-system 10
+  !
+  topology base
+  exit-af-topology
+  network 10.0.1.0 0.0.0.255
+  network 10.0.12.1 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv4 unicast vrf Green autonomous-system 172
+  !
+  topology base
+  exit-af-topology
+  network 172.16.1.1 0.0.0.0
+  network 172.16.12.1 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv4 unicast vrf Blue autonomous-system 192
+  !
+  topology base
+  exit-af-topology
+  network 192.168.1.1 0.0.0.0
+  network 192.168.12.1 0.0.0.0
+ exit-address-family
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
+
+
+
+
+<<<Router R2 configuration>>>
+
+
+
+R2#show running-config
+Building configuration...
+
+Current configuration : 2138 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+ip vrf Blue
+!
+ip vrf Green
+!
+ip vrf Red
+!
+!
+interface FastEthernet0/0.1
+ encapsulation dot1Q 100
+ ip vrf forwarding Red
+ ip address 10.0.12.2 255.255.255.0
+!
+interface FastEthernet0/0.2
+ encapsulation dot1Q 200
+ ip vrf forwarding Green
+ ip address 172.16.12.2 255.255.255.0
+!
+interface FastEthernet0/0.3
+ encapsulation dot1Q 300
+ ip vrf forwarding Blue
+ ip address 192.168.12.2 255.255.255.0
+!
+interface FastEthernet1/0.1
+ encapsulation dot1Q 100
+ ip vrf forwarding Red
+ ip address 10.0.23.1 255.255.255.0
+!
+interface FastEthernet1/0.2
+ encapsulation dot1Q 200
+ ip vrf forwarding Green
+ ip address 172.16.23.1 255.255.255.0
+!
+interface FastEthernet1/0.3
+ encapsulation dot1Q 300
+ ip vrf forwarding Blue
+ ip address 192.168.23.1 255.255.255.0
+!
+router eigrp VRFTEST
+ !
+ address-family ipv4 unicast vrf Red autonomous-system 10
+  !
+  topology base
+  exit-af-topology
+  network 10.0.12.2 0.0.0.0
+  network 10.0.23.1 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv4 unicast vrf Green autonomous-system 172
+  !
+  topology base
+  exit-af-topology
+  network 172.16.12.2 0.0.0.0
+  network 172.16.23.1 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv4 unicast vrf Blue autonomous-system 192
+  !
+  topology base
+  exit-af-topology
+  network 192.168.12.2 0.0.0.0
+  network 192.168.23.1 0.0.0.0
+ exit-address-family
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
+
+
+
+<<<Router R3 configuration>>>
+
+
+
+R3#show running-config
+Building configuration...
+
+Current configuration : 1973 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+ip vrf Blue
+!
+ip vrf Green
+!
+ip vrf Red
+!
+interface FastEthernet0/0.1
+ encapsulation dot1Q 100
+ ip vrf forwarding Red
+ ip address 10.0.23.2 255.255.255.0
+!
+interface FastEthernet0/0.2
+ encapsulation dot1Q 200
+ ip vrf forwarding Green
+ ip address 172.16.23.2 255.255.255.0
+!
+interface FastEthernet0/0.3
+ encapsulation dot1Q 300
+ ip vrf forwarding Blue
+ ip address 192.168.23.2 255.255.255.0
+!
+interface FastEthernet1/0
+ description LAN-Address
+ ip vrf forwarding Red
+ ip address 10.0.3.1 255.255.255.0
+ duplex full
+!
+interface FastEthernet2/0
+ description LAN-Address
+ ip vrf forwarding Green
+ ip address 172.16.3.1 255.255.255.0
+ duplex full
+!
+interface FastEthernet3/0
+ description LAN-Address
+ ip vrf forwarding Blue
+ ip address 192.168.3.1 255.255.255.0
+ duplex full
+!
+router eigrp VRFTEST
+ !
+ address-family ipv4 unicast vrf Red autonomous-system 10
+  !
+  topology base
+  exit-af-topology
+  network 10.0.3.0 0.0.0.255
+  network 10.0.23.2 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv4 unicast vrf Green autonomous-system 172
+  !
+  topology base
+  exit-af-topology
+  network 172.16.3.0 0.0.0.255
+  network 172.16.23.2 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv4 unicast vrf Blue autonomous-system 192
+  !
+  topology base
+  exit-af-topology
+  network 192.168.3.0
+  network 192.168.23.2 0.0.0.0
+ exit-address-family
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
