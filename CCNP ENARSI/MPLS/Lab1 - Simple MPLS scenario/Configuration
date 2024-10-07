@@ -1,8 +1,37 @@
 <<<Router PE1 configuration>>>
 
+PE1#show running-config
+Building configuration...
+
+Current configuration : 1135 bytes
+!
+! Last configuration change at 15:20:10 UTC Mon Oct 7 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
 hostname PE1
 !
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
 mpls label range 100 199
+!
+!
 !
 interface Loopback0
  ip address 2.2.2.2 255.255.255.255
@@ -18,11 +47,47 @@ interface FastEthernet1/0
  duplex full
  mpls ip
 !
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex full
+!
 router ospf 1
  redistribute connected subnets
  network 2.2.2.2 0.0.0.0 area 0
  network 10.10.11.0 0.0.0.3 area 0
 !
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
 
 
 
@@ -30,7 +95,34 @@ router ospf 1
 
 
 
+Provider-1#show running-config
+Building configuration...
+
+Current configuration : 1166 bytes
+!
+! Last configuration change at 15:00:10 UTC Mon Oct 7 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
 hostname Provider-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
 !
 mpls label range 200 299
 !
@@ -49,11 +141,47 @@ interface FastEthernet1/0
  duplex full
  mpls ip
 !
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex full
+!
 router ospf 1
  network 3.3.3.3 0.0.0.0 area 0
  network 10.10.11.0 0.0.0.3 area 0
  network 10.10.12.0 0.0.0.3 area 0
 !
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
 
 
 
@@ -61,7 +189,28 @@ router ospf 1
 
 
 
+Provider-2#show running-config
+Building configuration...
+
+Current configuration : 1166 bytes
+!
+! Last configuration change at 14:59:31 UTC Mon Oct 7 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
 hostname Provider-2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
 !
 mpls label range 300 399
 !
@@ -80,11 +229,47 @@ interface FastEthernet1/0
  duplex full
  mpls ip
 !
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex full
+!
 router ospf 1
  network 4.4.4.4 0.0.0.0 area 0
  network 10.10.12.0 0.0.0.3 area 0
  network 10.10.22.0 0.0.0.3 area 0
 !
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
 
 
 
@@ -92,7 +277,25 @@ router ospf 1
 
 
 
+PE2#show running-config
+Building configuration...
+
+Current configuration : 1135 bytes
+!
+! Last configuration change at 15:17:04 UTC Mon Oct 7 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
 hostname PE2
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
 !
 mpls label range 400 499
 !
@@ -110,17 +313,77 @@ interface FastEthernet1/0
  ip address 192.168.21.1 255.255.255.252
  duplex full
 !
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex full
+!
 router ospf 1
  redistribute connected subnets
  network 5.5.5.5 0.0.0.0 area 0
  network 10.10.22.0 0.0.0.3 area 0
 !
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
+
 
 
 <<<Router CE1 Site1>>>
 
 
+CE1#wr
+Building configuration...
+[OK]
+CE1#sho
+CE1#show run
+CE1#show running-config
+Building configuration...
+
+Current configuration : 987 bytes
+!
+! Last configuration change at 15:10:53 UTC Mon Oct 7 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
 hostname CE1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
 !
 interface Loopback0
  ip address 1.1.1.1 255.255.255.255
@@ -130,11 +393,47 @@ interface FastEthernet0/0
  ip address 192.168.11.2 255.255.255.252
  duplex full
 !
+interface FastEthernet1/0
+ no ip address
+ duplex full
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex full
+!
+ip forward-protocol nd
+!
 !
 no ip http server
 no ip http secure-server
 ip route 0.0.0.0 0.0.0.0 192.168.11.1 name Default-Route
 !
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
 
 
 
@@ -142,7 +441,20 @@ ip route 0.0.0.0 0.0.0.0 192.168.11.1 name Default-Route
 
 
 
+CE1#show running-config
+Building configuration...
+
+Current configuration : 987 bytes
+!
+! Last configuration change at 15:15:10 UTC Mon Oct 7 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
 hostname CE1
+!
+!
 !
 interface Loopback0
  ip address 6.6.6.6 255.255.255.255
@@ -152,5 +464,44 @@ interface FastEthernet0/0
  ip address 192.168.21.2 255.255.255.252
  duplex full
 !
+interface FastEthernet1/0
+ no ip address
+ duplex full
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex full
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
 ip route 0.0.0.0 0.0.0.0 192.168.21.1 name Default-Route
 !
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
