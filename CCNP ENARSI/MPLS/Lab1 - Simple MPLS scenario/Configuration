@@ -1,0 +1,86 @@
+<<<Router PE1 configuration>>>
+
+hostname PE1
+!
+mpls label range 100 199
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+!
+interface FastEthernet0/0
+ description PE1<--->CE1
+ ip address 192.168.11.1 255.255.255.252
+ duplex full
+!
+interface FastEthernet1/0
+ description PE1<--->Provider-1
+ ip address 10.10.11.1 255.255.255.252
+ duplex full
+ mpls ip
+!
+router ospf 1
+ network 2.2.2.2 0.0.0.0 area 0
+ network 10.10.11.0 0.0.0.3 area 0
+!
+
+
+
+<<<Router Provider-1 configuration>>>
+
+
+
+hostname Provider-1
+!
+mpls label range 200 299
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
+interface FastEthernet0/0
+ description Provider-1<--->PE1
+ ip address 10.10.11.2 255.255.255.252
+ duplex full
+ mpls ip
+!
+interface FastEthernet1/0
+ description Provider-1<--->Provider-2
+ ip address 10.10.12.1 255.255.255.252
+ duplex full
+ mpls ip
+!
+router ospf 1
+ network 3.3.3.3 0.0.0.0 area 0
+ network 10.10.11.0 0.0.0.3 area 0
+ network 10.10.12.0 0.0.0.3 area 0
+!
+
+
+
+<<<Router Provider-2 configuration>>>
+
+
+
+hostname Provider-2
+!
+mpls label range 300 399
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface FastEthernet0/0
+ description Provider-2<--->Provider-1
+ ip address 10.10.12.2 255.255.255.252
+ duplex full
+ mpls ip
+!
+interface FastEthernet1/0
+ description Provider-2<--->PE2
+ ip address 10.10.22.1 255.255.255.252
+ duplex full
+ mpls ip
+!
+router ospf 1
+ network 4.4.4.4 0.0.0.0 area 0
+ network 10.10.12.0 0.0.0.3 area 0
+ network 10.10.22.0 0.0.0.3 area 0
+!
