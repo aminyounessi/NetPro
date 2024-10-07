@@ -19,6 +19,7 @@ interface FastEthernet1/0
  mpls ip
 !
 router ospf 1
+ redistribute connected subnets
  network 2.2.2.2 0.0.0.0 area 0
  network 10.10.11.0 0.0.0.3 area 0
 !
