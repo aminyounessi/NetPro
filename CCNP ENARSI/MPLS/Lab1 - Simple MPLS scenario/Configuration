@@ -84,3 +84,32 @@ router ospf 1
  network 10.10.12.0 0.0.0.3 area 0
  network 10.10.22.0 0.0.0.3 area 0
 !
+
+
+
+<<<Router PE2 configuration>>>
+
+
+
+hostname PE2
+!
+mpls label range 400 499
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+!
+interface FastEthernet0/0
+ description PE2<--->Provider-2
+ ip address 10.10.22.2 255.255.255.252
+ duplex full
+ mpls ip
+!
+interface FastEthernet1/0
+ description PE2<--->CE2
+ ip address 192.168.21.1 255.255.255.252
+ duplex full
+!
+router ospf 1
+ network 5.5.5.5 0.0.0.0 area 0
+ network 10.10.22.0 0.0.0.3 area 0
+!
