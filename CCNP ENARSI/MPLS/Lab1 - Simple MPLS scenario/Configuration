@@ -111,6 +111,46 @@ interface FastEthernet1/0
  duplex full
 !
 router ospf 1
+ redistribute connected subnets
  network 5.5.5.5 0.0.0.0 area 0
  network 10.10.22.0 0.0.0.3 area 0
+!
+
+
+<<<Router CE1 Site1>>>
+
+
+hostname CE1
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface FastEthernet0/0
+ description CE1<--->PE1
+ ip address 192.168.11.2 255.255.255.252
+ duplex full
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 192.168.11.1 name Default-Route
+!
+
+
+
+<<<Router CE1 Site2>>>
+
+
+
+hostname CE1
+!
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+!
+interface FastEthernet0/0
+ description CE2<--->PE2
+ ip address 192.168.21.2 255.255.255.252
+ duplex full
+!
+ip route 0.0.0.0 0.0.0.0 192.168.21.1 name Default-Route
 !
